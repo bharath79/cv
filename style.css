@@ -134,3 +134,9 @@ h2 { font: 600 clamp(30px, 3.4vw, 44px)/1.08 var(--sans); letter-spacing: -0.03e
 @media (prefers-reduced-motion: reduce) {
   .caret, .dot, .hint { animation: none; }
 }
+
+/* the "copied" note after an email link is clicked */
+.toast { position: fixed; left: 50%; bottom: 28px; z-index: 30; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; padding: 12px 16px; font: 500 13px/1 var(--mono); color: var(--ink); background: rgba(6, 10, 14, .94); border: 1px solid var(--cyan); border-radius: 4px; box-shadow: 0 0 24px rgba(34, 211, 238, .25); transition: opacity .2s, transform .2s; white-space: nowrap; }
+.toast::before { content: "✓ "; color: var(--green); }
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }

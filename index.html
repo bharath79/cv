@@ -146,6 +146,39 @@
   </section>
 </main>
 
+<div class="toast" role="status" aria-live="polite"></div>
+
 <script type="module" src="scene.js"></script>
+<script>
+  // Email links still open the mail app; they also copy the address, so a visitor without one still has it.
+  (function () {
+    var toast = document.querySelector('.toast'), timer;
+    function show(text) {
+      toast.textContent = text;
+      toast.classList.add('is-on');
+      clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove('is-on'); }, 2600);
+    }
+    function copy(text) {
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+      return new Promise(function (ok, fail) {          // older browsers and plain http
+        var t = document.createElement('textarea');
+        t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy') ? ok() : fail(); } catch (e) { fail(e); }
+        document.body.removeChild(t);
+      });
+    }
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var address = a.getAttribute('href').slice(7).split('?')[0];
+        copy(address).then(
+          function () { show('Copied: ' + address); },
+          function () { show('Email: ' + address); }
+        );
+      });
+    });
+  })();
+</script>
 </body>
 </html>
