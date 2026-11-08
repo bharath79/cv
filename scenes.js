@@ -162,8 +162,9 @@ const build = {
       phone.updateMatrixWorld(); from.set(0, 0, .2); phone.localToWorld(from); g.worldToLocal(from);
       orders.forEach((o, i) => {
         o.t += dt * .28 * k;
-        if (o.t > 1) { glow[o.to] = 1; o.t = 0; o.to = Math.floor(Math.random() * cubes.length); }
-        curve(from, cubes[o.to].position, 1.6).getPoint(o.t, v); P.set(i, v, ACCENT);
+        if (o.t > 1) { glow[o.to] = 1; o.t = 0; o.to = Math.floor(Math.random() * cubes.length); o.c = null; }
+        if (!o.c) o.c = curve(from, cubes[o.to].position, 1.6);   // one curve per order, not per frame
+        o.c.getPoint(o.t, v); P.set(i, v, ACCENT);
       });
       P.done();
       cubes.forEach((c, i) => { glow[i] = Math.max(0, glow[i] - dt * 1.6); c.material.color.copy(INK).lerp(ACCENT, glow[i]); });
@@ -173,32 +174,62 @@ const build = {
 };
 
 function start() {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  // a high-density screen already smooths lines, so MSAA only below 2x; phones render at 1.5x at most
+  const touch = matchMedia('(pointer: coarse)').matches;
+  const maxDpr = touch ? 1.5 : 2;
+  let dpr = Math.min(devicePixelRatio, maxDpr);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: devicePixelRatio < 2, alpha: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(dpr);
   renderer.setClearColor(0x000000, 0);
   renderer.autoClear = false;
 
   const views = [...document.querySelectorAll('[data-scene]')].map(el => {
     const s = build[el.dataset.scene](); const project = el.closest('.project');
-    const view = { el, project, ...s, hover: false, shownAt: project ? null : 0 };
+    const view = { el, project, ...s, hover: false, shownAt: project ? null : 0, near: false };
     (project || el).addEventListener('pointerenter', () => { view.hover = true; });
     (project || el).addEventListener('pointerleave', () => { view.hover = false; });
     return view;
   });
 
   const mouse = { x: 0, y: 0 };
-  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; });
+  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; }, { passive: true });
 
   let W = 0, H = 0;
-  const resize = () => { W = innerWidth; H = innerHeight; renderer.setSize(W, H, false); };
-  addEventListener('resize', resize); resize();
+  const resize = () => { W = innerWidth; H = innerHeight; renderer.setSize(W, H, false); wake(); };
+  addEventListener('resize', resize);
+
+  // draw only while a frame is on screen and the tab is visible; otherwise the loop sleeps
+  let running = false, drewLast = false;
+  const anyNear = () => views.some(v => v.near);
+  function wake() { if (!running && !document.hidden && anyNear()) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+  const io = new IntersectionObserver(es => { es.forEach(e => { views.find(v => v.el === e.target).near = e.isIntersecting; }); wake(); }, { rootMargin: '80px 0px' });
+  views.forEach(v => io.observe(v.el));
+  document.addEventListener('visibilitychange', wake);
+  // reveals start on a class change, which the observer does not see
+  new MutationObserver(wake).observe(document.querySelector('.work'), { subtree: true, attributes: true, attributeFilter: ['class'] });
+
+  // adaptive quality: if frames run slow for a second, drop the resolution one step
+  let slow = 0;
+  function adapt(dtMs) {
+    slow = dtMs > 24 ? slow + 1 : Math.max(0, slow - 1);
+    if (slow > 45 && dpr > 1) { dpr = Math.max(1, dpr - .5); renderer.setPixelRatio(dpr); renderer.setSize(W, H, false); slow = 0; }
+  }
 
   const ease = x => 1 - Math.pow(1 - x, 3);
   let last = performance.now(), t = 0;
   function frame(now) {
-    const dt = Math.min(.05, (now - last) / 1000); last = now; if (!reduce) t += dt;
+    if (document.hidden || !anyNear()) {
+      if (drewLast) { renderer.setScissorTest(false); renderer.clear(); drewLast = false; }
+      running = false; return;
+    }
+    // phones: the drawings are slow, so 30 fps looks the same and halves the GPU and battery cost
+    if (touch && now - last < 30) { requestAnimationFrame(frame); return; }
+    const dtMs = now - last, dt = Math.min(.05, dtMs / 1000); last = now; if (!reduce) t += dt;
+    if (!touch) adapt(dtMs); else if (dtMs > 60) adapt(99);
     renderer.setScissorTest(false); renderer.clear(); renderer.setScissorTest(true);
+    drewLast = true;
     for (const vw of views) {
+      if (!vw.near) continue;
       const r = vw.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > H || r.width === 0) continue;
       // follow the frame's reveal: the drawing rises with the clip from the bottom
@@ -215,9 +246,12 @@ function start() {
       renderer.setScissor(r.left, y, r.width, r.height * shown);
       renderer.render(vw.scene, vw.camera);
     }
+    // under reduced motion nothing moves, so draw once per scroll instead of every frame
+    if (reduce) { running = false; return; }
     requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+  if (reduce) addEventListener('scroll', wake, { passive: true });
+  resize();
 }
 
 if (webglOK()) start();
