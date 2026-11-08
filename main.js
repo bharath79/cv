@@ -10,7 +10,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const out = document.querySelector('[data-count]');
   const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
   if (!reduce) {
-    const t0 = performance.now(), dur = 550;
+    const t0 = performance.now(), dur = 900;
     await new Promise(done => {
       (function tick(now) {
         const p = Math.min(1, (now - t0) / dur);
