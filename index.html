@@ -1,151 +1,135 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bharath M — Backend &amp; Cloud Architect</title>
-<meta name="description" content="Solution architect and senior software engineer with 7+ years building serverless and microservice backends on AWS and GCP, in Go, Node.js and Java.">
+<title>Bharath M — Solution Architect</title>
+<meta name="description" content="Solution architect and senior software engineer with 7+ years building serverless and microservice backends on AWS, Azure and GCP, in Go, Node.js and Java.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Bharath M — Backend &amp; Cloud Architect">
-<meta property="og:description" content="Serverless and microservice backends on AWS and GCP, in Go, Node.js and Java.">
+<meta property="og:title" content="Bharath M — Solution Architect">
+<meta property="og:description" content="Serverless and microservice backends on AWS, Azure and GCP, in Go, Node.js and Java.">
 <meta property="og:url" content="https://bharath79.github.io/cv/">
 <meta property="og:image" content="https://bharath79.github.io/cv/share.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://bharath79.github.io/cv/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#05070a">
+<meta name="theme-color" content="#f6f5f2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script type="importmap">
-{ "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-} }
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
 </script>
 </head>
 <body>
-<canvas id="scene" aria-hidden="true"></canvas>
-<div id="labels" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
+<!-- loader and the block wipe used between sections -->
+<div class="loader" aria-hidden="true">
+  <p class="loader__name">Bharath M <em>Architect</em></p>
+  <p class="loader__count"><span>‹ loading</span> <b data-count>0</b>% <span>›</span></p>
+</div>
+<div class="wipe" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<canvas id="gl" aria-hidden="true"></canvas>
 
 <header class="nav">
-  <a class="logo" href="#top">bharath.m<span class="caret" aria-hidden="true"></span></a>
-  <nav aria-label="Main">
-    <a href="#work">work</a>
-    <a href="#stack">stack</a>
-    <a href="#experience">experience</a>
-    <a class="btn btn--sm" href="mailto:bharaththermal@gmail.com">email me</a>
+  <a class="nav__logo" href="#top" data-wipe>Bharath M <em>Architect</em></a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#work" data-wipe><em>01</em> Work</a>
+    <a href="#about" data-wipe><em>02</em> About</a>
+    <a href="#contact" data-wipe><em>03</em> Contact</a>
   </nav>
 </header>
 
 <main id="top">
-  <section class="hero chapter" data-chapter="0">
-    <div class="panel panel--bare">
-      <p class="status"><span class="dot"></span>senior engineer @ acxhange · chennai</p>
-      <h1>Backend systems<br><span class="glow">that stay up.</span></h1>
-      <p class="lead">I&rsquo;m Bharath, a solution architect and senior engineer. For 7+ years I&rsquo;ve designed serverless and microservice backends on AWS and GCP, in Go, Node.js and Java.</p>
-      <div class="actions">
-        <a class="btn" href="mailto:bharaththermal@gmail.com">Email me <span aria-hidden="true">→</span></a>
-        <a class="btn btn--ghost" href="bharath-m-cv.pdf" download>Download CV</a>
-      </div>
-      <dl class="stats">
-        <div><dt>experience</dt><dd>7+ yrs</dd></div>
-        <div><dt>mail users served</dt><dd>200k+</dd></div>
-        <div><dt>teams</dt><dd>6</dd></div>
+  <section class="hero">
+    <div class="hero__text">
+      <p class="label">‹ Solution architect · Chennai ›</p>
+      <h1 class="reveal-lines"><span>Backend systems</span><span>that <em>stay</em> up.</span></h1>
+      <p class="hero__lead">Seven years designing serverless and microservice backends on AWS, Azure and GCP, in Go, Node.js and Java. Now a senior engineer at Acxhange.</p>
+    </div>
+    <div class="hero__art" data-scene="hero" role="img" aria-label="A line drawing of a backend system: clients, gateways, services, queues and databases, with requests moving between them"></div>
+    <a class="scroll-cue" href="#work" data-wipe>‹ scroll › <span aria-hidden="true">↓</span></a>
+  </section>
+
+  <section class="work" id="work">
+    <p class="label work__title">▪ Selected work</p>
+
+    <article class="project">
+      <div class="project__media" data-scene="security" role="img" aria-label="A core protected by rotating rings that stop some incoming requests"></div>
+      <p class="project__client">Wipro for Cisco · 2024—2026</p>
+      <h2 class="project__name">FedRAMP security platform</h2>
+      <p class="project__line">Backend services for Cisco’s data loss prevention and malware protection product, and the move from a polyglot codebase to one Node.js platform.</p>
+      <ul class="chips"><li>Backend</li><li>Migration</li><li>Node.js · Go</li><li>AWS</li></ul>
+    </article>
+
+    <article class="project project--right">
+      <div class="project__media" data-scene="mail" role="img" aria-label="Messages balanced across three mail servers"></div>
+      <p class="project__client">Skortech · 2023—2024</p>
+      <h2 class="project__name">Rewards platform &amp; mail for 200k users</h2>
+      <p class="project__line">Led the architecture of an enterprise rewards system on Go microservices and third-party APIs; ran a mailcow mail cluster with failover for 200,000+ users; built the cron and batch job system behind it.</p>
+      <ul class="chips"><li>Architecture</li><li>Go · Gin</li><li>High availability</li><li>EKS</li></ul>
+    </article>
+
+    <article class="project">
+      <div class="project__media" data-scene="iot" role="img" aria-label="A field of devices sending readings up to one hub"></div>
+      <p class="project__client">66Degrees for Locix · 2021—2023</p>
+      <h2 class="project__name">IoT platform for a US client</h2>
+      <p class="project__line">Primary point of contact for Locix: kept the platform running, turned requirements into specs, shipped features, and led its move from Python 2 to Python 3.</p>
+      <ul class="chips"><li>IoT</li><li>Python · Java</li><li>Kafka</li><li>DynamoDB</li></ul>
+    </article>
+
+    <article class="project project--right">
+      <div class="project__media" data-scene="commerce" role="img" aria-label="A phone sending orders into a grid of stock"></div>
+      <p class="project__client">Unilog &amp; TORUS · 2019—2021</p>
+      <h2 class="project__name">B2B commerce &amp; an Android app</h2>
+      <p class="project__line">Kept a mission-critical B2B e-commerce platform growing for enterprise clients, and built an Android app end to end with its REST backend.</p>
+      <ul class="chips"><li>E-commerce</li><li>Spring Boot</li><li>GCP</li><li>Android</li></ul>
+    </article>
+  </section>
+
+  <section class="about" id="about">
+    <p class="label">‹ Profile ›</p>
+    <p class="about__statement reveal-lines">I turn what a business needs into systems that <em>keep running</em>: the architecture, the migration, and the services in production.</p>
+    <div class="about__grid">
+      <p class="about__note">Solution architect and senior software engineer. I lead technical architecture discussions, migrate legacy systems and work directly with clients across fintech, e-commerce, IoT and enterprise security.</p>
+      <dl class="facts">
+        <div><dt>Years</dt><dd>7+</dd></div>
+        <div><dt>Teams</dt><dd>6</dd></div>
+        <div><dt>Mail users served</dt><dd>200k+</dd></div>
       </dl>
     </div>
-    <p class="hint"><span class="hint__drag">drag to rotate · </span>scroll to fly through</p>
-  </section>
 
-  <section class="chapter" id="work" data-chapter="1">
-    <article class="panel">
-      <p class="kicker"><span>01</span>2024 — now · Wipro → Acxhange</p>
-      <h2>Security software and serverless</h2>
-      <p>At Wipro I was a backend engineer on Cisco&rsquo;s FedRAMP product for data loss prevention and malware protection, and helped move it from a polyglot codebase to one streamlined Node.js platform.</p>
-      <p>At Acxhange I design and build cloud-native services on Lambda, DynamoDB and the Serverless Framework.</p>
-      <ul class="tags"><li>Node.js</li><li>Go</li><li>Lambda</li><li>SQS</li><li>EKS</li><li>DynamoDB</li><li>Postgres</li><li>Redis</li></ul>
-    </article>
-  </section>
-
-  <section class="chapter" data-chapter="2">
-    <article class="panel">
-      <p class="kicker"><span>02</span>2023 — 2024 · Skortech</p>
-      <h2>A rewards platform and mail for 200,000 users</h2>
-      <p>I led the architecture of an enterprise rewards system: microservices in Go, several third-party APIs, built for scale and high availability.</p>
-      <p>I also ran an in-house mail server on mailcow with load balancing and failover, serving more than 200,000 active users.</p>
-      <ul class="tags"><li>Go · Gin · Gorm</li><li>Microservices</li><li>mailcow</li><li>Postgres</li><li>Mongo</li><li>ELK</li></ul>
-    </article>
-  </section>
-
-  <section class="chapter" data-chapter="3">
-    <article class="panel">
-      <p class="kicker"><span>03</span>2021 — 2023 · 66Degrees</p>
-      <h2>An IoT platform for a US client</h2>
-      <p>I was the main point of contact for Locix, a US Internet of Things platform: maintaining it, turning business requirements into specs and shipping new features with cross-functional teams.</p>
-      <p>I also built an internal employee management system in Node.js and TypeScript.</p>
-      <ul class="tags"><li>Go</li><li>Python</li><li>Kafka</li><li>Lambda</li><li>DynamoDB</li><li>Jenkins</li></ul>
-    </article>
-  </section>
-
-  <section class="chapter" data-chapter="4">
-    <article class="panel">
-      <p class="kicker"><span>04</span>2019 — 2021 · Unilog &amp; TORUS</p>
-      <h2>B2B e-commerce and an Android app</h2>
-      <p>At Unilog I maintained and extended a mission-critical B2B e-commerce platform for enterprise clients across industries, shipping with little downtime.</p>
-      <p>At TORUS I built an Android app end to end, from the app to its REST backend.</p>
-      <ul class="tags"><li>Spring Boot</li><li>Node.js · Prisma</li><li>GCP</li><li>Android</li><li>MySQL</li></ul>
-    </article>
-  </section>
-
-  <section class="block" id="stack">
-    <div class="wrap">
-      <p class="kicker"><span>05</span>stack</p>
-      <h2>Tools I design with</h2>
-      <div class="stack">
-        <div><h3>languages</h3><ul><li>Go <em>Gin, Gorm</em></li><li>Node.js <em>Express, Fastify, Prisma</em></li><li>Java <em>Spring Boot, Reactive, Spark</em></li><li>Python <em>Flask, FastAPI</em></li></ul></div>
-        <div><h3>cloud</h3><ul><li>AWS <em>Lambda, SQS, EKS, DynamoDB</em></li><li>Serverless architecture</li><li>GCP</li><li>Firebase</li></ul></div>
-        <div><h3>data</h3><ul><li>Postgres, MySQL, Oracle</li><li>MongoDB</li><li>DynamoDB, Firestore</li><li>Redis, Kafka</li></ul></div>
-        <div><h3>delivery</h3><ul><li>Docker, Kubernetes</li><li>Terraform</li><li>Jenkins, Git</li><li>ELK</li></ul></div>
-      </div>
+    <div class="skills">
+      <div><h3>‹ Languages ›</h3><ul><li>Go — Gin, Gorm</li><li>Node.js — Express, Fastify, Prisma</li><li>Java — Spring Boot, Reactive, Spark</li><li>Python — Flask, FastAPI</li></ul></div>
+      <div><h3>‹ Cloud ›</h3><ul><li>AWS — Lambda, SQS, EKS, DynamoDB</li><li>Azure</li><li>GCP, Firebase</li><li>Heroku, DigitalOcean</li></ul></div>
+      <div><h3>‹ Data ›</h3><ul><li>Postgres, MySQL, Oracle</li><li>MongoDB, DynamoDB, Firestore</li><li>Redis</li><li>Kafka, SQS</li></ul></div>
+      <div><h3>‹ Delivery ›</h3><ul><li>Docker, Kubernetes</li><li>Terraform</li><li>Jenkins, Git</li><li>ELK</li></ul></div>
     </div>
+
+    <ol class="jobs">
+      <li><span>2026—now</span><b>Acxhange</b><span>Senior Software Engineer</span><span>Chennai</span></li>
+      <li><span>2024—2026</span><b>Wipro</b><span>Software Engineer 2</span><span>Mysuru</span></li>
+      <li><span>2023—2024</span><b>Skortech</b><span>Software Engineer 2</span><span>Mysuru</span></li>
+      <li><span>2021—2023</span><b>66Degrees</b><span>Software Engineer</span><span>Mysuru</span></li>
+      <li><span>2020—2021</span><b>Unilog</b><span>Software Engineer</span><span>Mysuru</span></li>
+      <li><span>2019—2020</span><b>TORUS</b><span>Software Engineer</span><span>Mysuru</span></li>
+    </ol>
+    <p class="edu">M.Tech, Mechanical Engineering — SSIT Tumkur, 2017, GPA 9.18/10 &nbsp;·&nbsp; B.E., Mechanical Engineering — VVCE Mysuru, 2015</p>
   </section>
 
-  <section class="block" id="experience">
-    <div class="wrap">
-      <p class="kicker"><span>06</span>experience</p>
-      <h2>Six teams, seven years</h2>
-      <ol class="timeline">
-        <li><span class="when">2026 — now</span><span class="who">Acxhange</span><span class="role">Senior Software Engineer · Chennai</span></li>
-        <li><span class="when">2024 — 2026</span><span class="who">Wipro</span><span class="role">Software Engineer 2 · Mysuru</span></li>
-        <li><span class="when">2023 — 2024</span><span class="who">Skortech</span><span class="role">Software Engineer 2 · Mysuru</span></li>
-        <li><span class="when">2021 — 2023</span><span class="who">66Degrees</span><span class="role">Software Engineer · Mysuru</span></li>
-        <li><span class="when">2020 — 2021</span><span class="who">Unilog</span><span class="role">Software Engineer · Mysuru</span></li>
-        <li><span class="when">2019 — 2020</span><span class="who">TORUS</span><span class="role">Software Engineer · Mysuru</span></li>
-      </ol>
-      <div class="edu">
-        <p><b>M.Tech, Mechanical Engineering</b> — Sri Siddhartha Institute of Technology, 2017 · GPA 9.18/10</p>
-        <p><b>B.E., Mechanical Engineering</b> — Vidya Vardhaka College of Engineering, 2015</p>
-      </div>
+  <section class="contact" id="contact">
+    <p class="label">‹ Contact ›</p>
+    <h2 class="contact__title reveal-lines"><span>Let’s build</span><span>something <em>reliable.</em></span></h2>
+    <a class="contact__mail" href="mailto:bharaththermal@gmail.com">bharaththermal@gmail.com <span aria-hidden="true">↗</span></a>
+    <div class="contact__links">
+      <a href="https://www.linkedin.com/in/bharath79" rel="noopener">LinkedIn ↗</a>
+      <a href="bharath-m-cv.pdf" download>Download CV ↓</a>
     </div>
-  </section>
-
-  <section class="block contact" id="contact">
-    <div class="wrap">
-      <p class="kicker"><span>07</span>contact</p>
-      <h2>Building something that has to stay up?</h2>
-      <a class="mail" href="mailto:bharaththermal@gmail.com">bharaththermal@gmail.com</a>
-      <div class="actions">
-        <a class="btn" href="mailto:bharaththermal@gmail.com">Email me <span aria-hidden="true">→</span></a>
-        <a class="btn btn--ghost" href="https://www.linkedin.com/in/bharath79" rel="noopener">LinkedIn</a>
-        <a class="btn btn--ghost" href="bharath-m-cv.pdf" download>Download CV</a>
-      </div>
-    </div>
-    <footer class="foot"><span>© 2026 Bharath M</span><span>built with three.js</span></footer>
+    <footer class="foot"><span>© 2026 Bharath M</span><span>Chennai, India</span></footer>
   </section>
 </main>
 
-<script type="module" src="scene.js"></script>
+<script type="module" src="main.js"></script>
+<script type="module" src="scenes.js"></script>
 </body>
 </html>
